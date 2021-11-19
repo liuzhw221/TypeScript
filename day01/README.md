@@ -1,3 +1,22 @@
+# extends
+- 可以用来继承一个class,interface,还可以用来判断有条件类型(很多时候在ts看到extends，并不是继承的意识)
+- 示例：
+```
+T extends U ? X : Y;
+```
+- 上面的类型意思是，若 T 能够赋值给 U，那么类型是 X，否则为 Y
+原理是令 T' 和 U' 分别为 T 和 U 的实例，并将所有类型参数替换为 any，如果 T' 能赋值给 U'，则将有条件的类型解析成 X，否则为Y。 上面的官方解释有点绕，下面举个栗子：
+```
+type Words = 'a'|'b'|"c";
+
+type W<T> = T extends Words ? true : false;
+
+type WA = W<'a'>; // -> true
+
+type WD = W<'d'>; // -> false
+
+```
+- a 可以赋值给 Words 类型，所以 WA 为 true，而 d 不能赋值给 Words 类型，所以 WD 为 false。
 
 # keyof
 - keyof 操作符接受对象类型，并生成其键的字符串或数值文字联合。
